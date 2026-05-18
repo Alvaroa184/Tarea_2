@@ -28,6 +28,13 @@ public abstract class Reunion {
     public List<Invitacion> obtenerInvitaciones(){return invitaciones;}
     public List<Nota> obtenerNotas(){return notas;}
     public Reunion(TipoReunion tipo,Empleado organizador,LocalDate fecha,Duration duracionPrevista) {
+        if (duracionPrevista==null || duracionPrevista.isNegative() || duracionPrevista.isZero()) {
+            throw new DuracionInvalidaException("La duracion prevista de la reunion debe ser mayor a cero");
+        }
+        if (fecha==null || fecha.isBefore(LocalDate.now())) {
+            throw new DatoInvalidoException("La fecha de la reunion no puede ser en el pasado");
+        }
+
         this.fecha=fecha;
         this.duracionPrevista=duracionPrevista;
         this.organizador = organizador;
@@ -137,8 +144,9 @@ public void registrarAusencia(){
     }
     public float calcularTiempoReal(){
         if(horainicio==null||horafin==null){
-            return 0;
+            throw new ReunionNoFinalizadaException("La reunion no ha iniciado o no ha finalizado");
         }
+
         Duration tiempo= Duration.between(horainicio, horafin);
         float tiempo_reunion= tiempo.toHours();
         return tiempo_reunion;

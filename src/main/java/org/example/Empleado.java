@@ -49,6 +49,16 @@ public class Empleado implements Invitable {
     }
 
     public Empleado(String id, String nombre, String apellido, String correo,Departamento departamento) {
+        if (nombre==null || nombre.trim().isEmpty() || apellido==null || apellido.trim().isEmpty()) {
+            throw new DatoInvalidoException("El nombre y el apellido del empleado no pueden estar vacios");
+        }
+        if (correo==null || !correo.contains("@")) {
+            throw new DatoInvalidoException("El correo del empleado debe contener un '@'");
+        }
+        if (id==null || id.trim().isEmpty()) {
+            throw new DatoInvalidoException("El id del empleado no puede estar vacio");
+        }
+
         this.departamento = departamento;
         this.id = id;
         this.nombre = nombre;
