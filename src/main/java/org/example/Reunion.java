@@ -72,7 +72,7 @@ public abstract class Reunion {
     }
     public void registrarAsistencia(Invitable invitable){
         if (horainicio == null) {
-            throw new ReunionNoinicidadaException("La reunion no ha iniciado");
+            throw new ReunionNoinicializadaException("La reunion no ha iniciado");
         }
         Instant horallegada = Instant.now();
         boolean invitado = false;
@@ -165,7 +165,7 @@ public void registrarAusencia(){
           throw new ReunionYaFinalizadaException("La reunion ya fue finalizada");
       }
       else if(horainicio==null){
-          throw new ReunionNoinicidadaException("la reunion nunca fue iniciada");
+          throw new ReunionNoinicializadaException("la reunion nunca fue iniciada");
       }
         horafin=Instant.now();
     }
