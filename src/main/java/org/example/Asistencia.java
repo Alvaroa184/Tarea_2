@@ -1,4 +1,26 @@
 package org.example;
-
+import java.time.*;
 public class Asistencia {
+    private Invitable invitable;
+    private Instant hora;
+    public Asistencia(Invitable invitable, Instant hora) {
+        this.invitable = invitable;
+        this.hora = hora;
+    }
+    public Invitable getInvitable() {
+        return invitable;
+    }
+    public void setInvitable(Invitable invitable) {
+        this.invitable = invitable;
+    }
+    public Instant getHora() {
+        return hora;
+    }
+    public void setHora(Instant hora) {
+        this.hora = hora;
+    }
+    @Override
+    public String toString() {
+        return "Asistencia\n"+invitable+"\n"+"hora: "+hora+"\n";
+    }
 }
