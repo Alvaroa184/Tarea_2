@@ -207,7 +207,6 @@ public class ReunionTest {
         reunionBase.iniciar();
 
         reunionBase.registrarAsistencia(invitado1);
-
         Thread.sleep(5000);
         reunionBase.registrarAsistencia(invitado2);
 
@@ -236,5 +235,50 @@ public class ReunionTest {
         assertTrue(archivoGenerado.length() > 0, "El archivo de informe no deberia estar vacio");
 
         assertTrue(archivoGenerado.delete(), "El archivo temporal de prueba deberia poder borrarse sin problemas");
+    }
+
+    @Test
+    public void testAsistenciaDeInvitadoExternoExitosa() {
+        Invitado_Externo externo1 = new Invitado_Externo("Juan", "Perez", "juan@uch.cl");
+        reunionBase.registrarInvitacion(invitado1);
+        reunionBase.registrarInvitacion(externo1);
+        reunionBase.iniciar();
+        reunionBase.registrarAsistencia(externo1);
+        reunionBase.registrarAsistencia(invitado1);
+        reunionBase.registrarAusencia();
+
+        assertEquals(2, reunionBase.obtenerTotalAsistencia(), "El invitado externo debe sumarse a la asistencia total");
+        assertEquals(100.0f, reunionBase.obtenerPorcentajeAsistencia(), 0.01f, "El porcentaje de asistencia debe ser 100%");
+    }
+
+    @Test
+    public void testReunionSoloConInvitadosExternos() throws InterruptedException {
+        Invitado_Externo externo1 = new Invitado_Externo("Luis", "Rojas", "luis@uch.cl");
+        Invitado_Externo externo2 = new Invitado_Externo("Maria", "Paz", "maria@uch.cl");
+
+        reunionBase.registrarInvitacion(externo1);
+        reunionBase.registrarInvitacion(externo2);
+        reunionBase.iniciar();
+
+        reunionBase.registrarAsistencia(externo1);
+        Thread.sleep(5000);
+        reunionBase.registrarAsistencia(externo2);
+        reunionBase.registrarAusencia();
+
+        assertEquals(2, reunionBase.obtenerTotalAsistencia(), "Debe contar a ambos externos");
+        assertEquals(1, reunionBase.obtenerRetraso().size(), "Debe identificar al externo retrasado");
+        assertEquals(100.0f, reunionBase.obtenerPorcentajeAsistencia(), 0.01f, "El porcentaje debe ser 100%");
+    }
+
+    //Casos extremos//
+
+    @Test
+    public void testReunionCeroMinutos(){
+        reunionBase.registrarInvitacion(invitado1);
+        reunionBase.iniciar();
+        reunionBase.finalizar();
+
+        float tiempoEnMinutos = reunionBase.calcularTiempoReal();
+        assertEquals(0.0f, tiempoEnMinutos, 0.001f, "Una reunion instantanea debe registrar 0 minutos");
     }
 }
