@@ -1,0 +1,32 @@
+Reunion virutal
+enlace: meet.google
+tipo: TECNICA
+organizador: Empleado
+id:001
+Nombre: Carlos Perez
+Correo: carlos@udec.cl
+Departamento: Ventas
+fecha: 2026-05-20
+duracion prevista: PT2H
+Hora de inicio: 2026-05-19T17:48:17.884283300Z
+hora de fin: 2026-05-19T17:48:17.885285700Z
+asistencias: [Asistencia
+Empleado
+id:002
+Nombre: Ana Gomez
+Correo: ana@udec.cl
+Departamento: Ventas
+hora: 2026-05-19T17:48:17.884283300Z
+]
+retrasos: []
+ausencias: []
+invitaciones: [Se ha invitado a;
+Empleado
+id:002
+Nombre: Ana Gomez
+Correo: ana@udec.cl
+Departamento: Ventas
+hora: 2026-05-19T17:48:17.880281200Z
+]
+notas: [se ha escrito una nota: Nota de prueba
+a las: 2026-05-19T17:48:17.885285700Z]
