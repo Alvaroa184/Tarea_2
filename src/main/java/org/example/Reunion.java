@@ -148,7 +148,10 @@ public void registrarAusencia(){
         }
 
         Duration tiempo= Duration.between(horainicio, horafin);
-        float tiempo_reunion= tiempo.toHours();
+
+        //Cambio de tiempo.toHours() a (float) tiempo.toMillis() / 60000.0f para que las reuniones que duren menos de una hora no las tome como 0//
+        float tiempo_reunion= (float) tiempo.toMillis() / 60000.0f; //Tiempo en minutos//
+
         return tiempo_reunion;
     }
     public void iniciar(){
