@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
 
 public class ReunionTest {
 
@@ -171,6 +173,7 @@ public class ReunionTest {
 
         assertEquals(2, reunionBase.obtenerNotas().size(), "Deben haber 2 notas registradas");
         assertEquals("Tema 1: Presupuesto", reunionBase.obtenerNotas().get(0).getContenido(), "El contenido de la primera nota debe coincidir");
+        assertEquals("Tema 2: Marketing", reunionBase.obtenerNotas().get(1).getContenido(), "El contenido de la segunda nota debe coincidir");
     }
 
     @Test
@@ -216,4 +219,22 @@ public class ReunionTest {
         assertEquals(1, reunionBase.obtenerAusencia().size(), "Debe haber 1 persona ausente");
     }
 
+    @Test
+    public void testgenerarInforme() throws IOException {
+        reunionBase.registrarInvitacion(invitado1);
+        reunionBase.iniciar();
+        reunionBase.registrarAsistencia(invitado1);
+        reunionBase.agregarNota("Tema 1: Presupuesto");
+        reunionBase.agregarNota("Tema 2: Marketing");
+        reunionBase.finalizar();
+
+        File archivoGenerado = new File("informe.txt");
+
+        reunionBase.generarInforme();
+
+        assertTrue(archivoGenerado.exists(), "El archivo 'informe.txt' deberia haberse creado");
+        assertTrue(archivoGenerado.length() > 0, "El archivo de informe no deberia estar vacio");
+
+        assertTrue(archivoGenerado.delete(), "El archivo temporal de prueba deberia poder borrarse sin problemas");
+    }
 }
