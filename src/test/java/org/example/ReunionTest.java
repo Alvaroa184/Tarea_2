@@ -322,4 +322,10 @@ public class ReunionTest {
         assertEquals(2, reunionBase.obtenerRetraso().size(), "El sistema debe detectar que ambos llegaron tarde");
         assertEquals(0, reunionBase.obtenerAusencia().size(), "No debe haber ausentes");
     }
+
+    @Test
+    public void testObtenerPorcentajeAsistenciaAntesDeCargarDatos() {
+        float porcentaje = reunionBase.obtenerPorcentajeAsistencia();
+        assertEquals(0.0f, porcentaje, 0.01f, "Debe retornar 0.0");
+    }
 }
