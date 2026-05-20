@@ -54,11 +54,22 @@ public class ReunionTest {
     }
 
     @Test
-    public void testInvitacionDuplicadaExcepcion() {
+    public void testInvitacionDuplicadaEmpleadoExcepcion() {
         reunionBase.registrarInvitacion(invitado1);
 
         assertThrows(InvitacionDuplicadaException.class, () -> {
             reunionBase.registrarInvitacion(invitado1);
+        });
+    }
+
+    @Test
+    public void testInvitacionDuplicadaInvitadoExternoExcepcion() {
+        Invitado_Externo externo1 = new Invitado_Externo("Juan", "Perez", "juan@uch.cl");
+
+        reunionBase.registrarInvitacion(externo1);
+
+        assertThrows(InvitacionDuplicadaException.class, () -> {
+            reunionBase.registrarInvitacion(externo1);
         });
     }
 
@@ -280,5 +291,35 @@ public class ReunionTest {
 
         float tiempoEnMinutos = reunionBase.calcularTiempoReal();
         assertEquals(0.0f, tiempoEnMinutos, 0.001f, "Una reunion instantanea debe registrar 0 minutos");
+    }
+
+    @Test
+    public void testAsistenciaJustoAntesLimiteRetraso() throws InterruptedException {
+        reunionBase.registrarInvitacion(invitado1);
+        reunionBase.iniciar();
+
+        Thread.sleep(3000);
+        reunionBase.registrarAsistencia(invitado1);
+        reunionBase.registrarAusencia();
+
+        assertEquals(1, reunionBase.obtenerTotalAsistencia(), "Debe contar como asistente");
+        assertEquals(0, reunionBase.obtenerRetraso().size(), "No debe contar como retraso por estar bajo los 4 segundos");
+    }
+
+    @Test
+    public void testReunionTodosLleganConRetraso() throws InterruptedException {
+        Empleado invitado2 = new Empleado("003", "Luis", "Soto", "luis@udec.cl", ventas);
+        reunionBase.registrarInvitacion(invitado1);
+        reunionBase.registrarInvitacion(invitado2);
+        reunionBase.iniciar();
+
+        Thread.sleep(5000);
+        reunionBase.registrarAsistencia(invitado1);
+        reunionBase.registrarAsistencia(invitado2);
+        reunionBase.registrarAusencia();
+
+        assertEquals(100.0f, reunionBase.obtenerPorcentajeAsistencia(), 0.01, "El porcentaje sigue siendo 100%");
+        assertEquals(2, reunionBase.obtenerRetraso().size(), "El sistema debe detectar que ambos llegaron tarde");
+        assertEquals(0, reunionBase.obtenerAusencia().size(), "No debe haber ausentes");
     }
 }
