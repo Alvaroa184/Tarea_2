@@ -92,7 +92,11 @@ public abstract class Reunion {
         }
         Asistencia a= new Asistencia(invitable,horallegada);
         asistencias.add(a);
-        if(horallegada.isAfter(horainicio)){
+
+        //Margen de hora de llegada para que no cuenten todos como retraso//
+        Instant horaLimiteRetraso = horainicio.plusSeconds(4);
+
+        if(horallegada.isAfter(horaLimiteRetraso)){
             Retraso ret = new Retraso(invitable,horallegada,horainicio);
             retrasos.add(ret);
         }
