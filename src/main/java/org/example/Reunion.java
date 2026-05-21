@@ -97,7 +97,7 @@ public abstract class Reunion {
         Instant horaLimiteRetraso = horainicio.plusSeconds(4);
 
         if(horallegada.isAfter(horaLimiteRetraso)){
-            Retraso ret = new Retraso(invitable,horallegada,horainicio);
+            Retraso ret = new Retraso(invitable,horallegada,horaLimiteRetraso);
             retrasos.add(ret);
         }
 

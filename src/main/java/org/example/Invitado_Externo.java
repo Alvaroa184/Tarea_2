@@ -1,5 +1,9 @@
 package org.example;
 
+/**
+ * Representa a una persona externa a la empresa que ha sido invitada a una reunion
+ * Almacena sus datos de contacto como nombre, apellidos y correo
+ */
 public class Invitado_Externo implements Invitable {
     private String nombre;
     private String apellidos;
@@ -26,6 +30,12 @@ public class Invitado_Externo implements Invitable {
         return Correo;
     }
 
+    /**
+     * Almacena los datos del invitado externo para hacerlo invitable para una reunion
+     * @param nombre Nombre del invitado externo
+     * @param apellidos Apellidos del invitado externo
+     * @param Correo Correo del invitado externo
+     */
     public Invitado_Externo(String nombre, String apellidos, String Correo) {
         this.nombre = nombre;
         this.apellidos = apellidos;

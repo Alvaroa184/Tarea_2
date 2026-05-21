@@ -1,12 +1,14 @@
 package org.example;
 
+/**
+ * Representa a un trabajador interno de la empresa y su departamento especifico
+ */
 public class Empleado implements Invitable {
     private String id;
     private String nombre;
     private String apellidos;
     private String correo;
     private Departamento departamento;
-
 
     public String getApellidos() {
         return apellidos;
@@ -48,6 +50,14 @@ public class Empleado implements Invitable {
        System.out.println(toString());
     }
 
+    /**
+     * Crea el registro del empleado con sus vinculaciones
+     * @param id Codigo identificador del empleado
+     * @param nombre Nombre del empleado
+     * @param apellido Apellidos del empleado
+     * @param correo Correo del empleado
+     * @param departamento Departamento al que pertenece el empleado
+     */
     public Empleado(String id, String nombre, String apellido, String correo,Departamento departamento) {
         if (nombre==null || nombre.trim().isEmpty() || apellido==null || apellido.trim().isEmpty()) {
             throw new DatoInvalidoException("El nombre y el apellido del empleado no pueden estar vacios");
